@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WanderWise | premium travel planner</title>
+  <!-- Bootstrap + icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- Leaflet (map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="light" data-lang="en">
+<!-- NAVBAR with theme & language toggles -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#"><i class="bi bi-compass"></i> WanderWise</a>
+    <div class="d-flex align-items-center">
+      <div class="theme-lang">
+        <button class="theme-toggle" id="themeToggle"><i class="bi bi-moon-stars"></i> <span class="en-only">Dark</span><span class="es-only">Oscuro</span></button>
+        <button class="lang-toggle" id="langToggle"><i class="bi bi-globe2"></i> <span id="langLabel">EN</span></button>
+      </div>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div class="navbar-nav">
+        <a class="nav-link" href="#home"><span class="en-only">Home</span><span class="es-only">Inicio</span></a>
+        <a class="nav-link" href="#gallery"><span class="en-only">Gallery</span><span class="es-only">Galería</span></a>
+        <a class="nav-link" href="#hotels"><span class="en-only">Hotels</span><span class="es-only">Hoteles</span></a>
+        <a class="nav-link" href="#flights"><span class="en-only">Flights</span><span class="es-only">Vuelos</span></a>
+        <a class="nav-link" href="#budget"><span class="en-only">Packages</span><span class="es-only">Paquetes</span></a>
+        <a class="nav-link" href="#plan"><span class="en-only">Timeline</span><span class="es-only">Itinerario</span></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero-section">
+  <video autoplay muted loop playsinline id="hero-video">
+    <source src="https://videos.pexels.com/video-files/2169880/2169880-uhd_3840_2160_30fps.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <h1 class="hero-title en-only">Plan your journey, beyond the ordinary</h1>
+    <h1 class="hero-title es-only">Planifica tu viaje, más allá de lo ordinario</h1>
+    <p class="hero-sub en-only">Curated stays · smart flights · effortless itinerary</p>
+    <p class="hero-sub es-only">Estancias seleccionadas · vuelos inteligentes · itinerario sin esfuerzo</p>
+    <div class="hero-search mx-auto">
+      <div class="row g-2">
+        <div class="col-md-4">
+          <input type="text" class="form-control" id="fromInput" placeholder="From">
+        </div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" id="toInput" placeholder="Destination">
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary w-100" id="searchBtn">
+            <i class="bi bi-search"></i> <span class="en-only">Search</span><span class="es-only">Buscar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p class="mt-4 opacity-75 fw-light" id="searchFeedback"><i class="bi bi-geo-alt"></i> Enter a destination</p>
+  </div>
+</section>
+
+<!-- GALLERY SLIDER -->
+<section id="gallery" class="container py-5">
+  <h2 class="section-heading en-only">Cinematic destination gallery</h2>
+  <h2 class="section-heading es-only">Galería cinematográfica</h2>
+  <div class="slider-section">
+    <div class="swiper background-swiper">
+      <div class="swiper-wrapper" id="sliderWrapper">
+        <div class="swiper-slide" data-city="paris" data-lat="48.8566" data-lng="2.3522">
+          <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop" class="slide-image">
+          <div class="slide-content">
+            <h3>Paris</h3>
+            <p class="en-only">City of light, romance, iconic landmarks</p>
+            <p class="es-only">Ciudad de la luz, romance, lugares emblemáticos</p>
+            <button class="slide-explore-btn explore-btn" data-city="paris">explore</button>
+          </div>
+        </div>
+        <div class="swiper-slide" data-city="tokyo" data-lat="35.6762" data-lng="139.6503">
+          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1974&auto=format&fit=crop" class="slide-image">
+          <div class="slide-content">
+            <h3>Tokyo</h3>
+            <p class="en-only">Neon, tradition, sushi. Ancient meets future</p>
+            <p class="es-only">Neón, tradición, sushi. El pasado se encuentra con el futuro</p>
+            <button class="slide-explore-btn explore-btn" data-city="tokyo">explore</button>
+          </div>
+        </div>
+        <div class="swiper-slide" data-city="dubai" data-lat="25.2048" data-lng="55.2708">
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2070&auto=format&fit=crop" class="slide-image">
+          <div class="slide-content">
+            <h3>Dubai</h3>
+            <p class="en-only">Ultramodern, desert safaris, Burj Khalifa</p>
+            <p class="es-only">Ultramoderno, safaris por el desierto, Burj Khalifa</p>
+            <button class="slide-explore-btn explore-btn" data-city="dubai">explore</button>
+          </div>
+        </div>
+        <div class="swiper-slide" data-city="nyc" data-lat="40.7128" data-lng="-74.0060">
+          <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070&auto=format&fit=crop" class="slide-image">
+          <div class="slide-content">
+            <h3>New York</h3>
+            <p class="en-only">The city that never sleeps</p>
+            <p class="es-only">La ciudad que nunca duerme</p>
+            <button class="slide-explore-btn explore-btn" data-city="nyc">explore</button>
+          </div>
+        </div>
+        <div class="swiper-slide" data-city="italy" data-lat="41.9028" data-lng="12.4964">
+          <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2070&auto=format&fit=crop" class="slide-image">
+          <div class="slide-content">
+            <h3>Italy</h3>
+            <p class="en-only">History, art, incredible food</p>
+            <p class="es-only">Historia, arte, comida increíble</p>
+            <button class="slide-explore-btn explore-btn" data-city="italy">explore</button>
+          </div>
+        </div>
+        <div class="swiper-slide" data-city="maldives" data-lat="3.2028" data-lng="73.2207">
+          <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=2070&auto=format&fit=crop" class="slide-image">
+          <div class="slide-content">
+            <h3>Maldives</h3>
+            <p class="en-only">Turquoise water, overwater bungalows</p>
+            <p class="es-only">Aguas turquesa, bungalows sobre el agua</p>
+            <button class="slide-explore-btn explore-btn" data-city="maldives">explore</button>
+          </div>
+        </div>
+      </div>
+      <div class="slider-section__prev-button"><i class="fas fa-chevron-left"></i></div>
+      <div class="slider-section__next-button"><i class="fas fa-chevron-right"></i></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CITY MODAL with MAP -->
+<div class="modal fade modal-city" id="cityModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h3 class="modal-title fw-bold">City details</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="cityDetailImage" class="city-detail-img w-100 rounded-4 mb-3" style="height:250px; object-fit:cover;">
+        <h2 id="cityDetailName" class="fw-bold"></h2>
+        <p id="cityDetailDescription" class="fs-5"></p>
+        <div id="cityMap" style="height: 250px; border-radius: 24px;"></div>
+        <ul id="cityDetailHighlights" class="list-unstyled mt-4"></ul>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary rounded-pill" id="startPlanningBtn">start planning</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMIZE PLAN MODAL -->
+<div class="modal fade modal-customize" id="planModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header border-0">
+        <h3 class="modal-title fw-bold"><i class="bi bi-pencil-square me-2"></i>customize itinerary</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Day 1</label>
+          <input type="text" class="form-control rounded-pill" value="Hotel check-in, Seine cruise" id="day1Input">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Day 2</label>
+          <input type="text" class="form-control rounded-pill" value="Louvre, Montmartre" id="day2Input">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Day 3</label>
+          <input type="text" class="form-control rounded-pill" placeholder="e.g. museum" id="day3Input">
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary rounded-pill" id="savePlanBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOTELS SECTION -->
+<section id="hotels" class="container py-5">
+  <div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+    <span class="feature-badge"><i class="bi bi-star-fill me-1" style="color: #9b87b5;"></i> Backed by travellers</span>
+    <span class="feature-badge"><i class="bi bi-house-heart me-1"></i> Stays for every style</span>
+    <span class="feature-badge"><i class="bi bi-cash-stack me-1"></i> Best rates around</span>
+  </div>
+  <h2 class="section-heading">Premium hotel collection</h2>
+  <p class="section-sub" id="hotelsSubtitle">Discover top-rated hotels worldwide</p>
+  <div class="hotel-grid" id="hotelGrid">
+    <div class="hotel-card" data-location="paris" data-keywords="paris france grand royale eiffel louvre">
+      <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop');">
+        <span class="hotel-rating"><i class="bi bi-star-fill"></i> 4.8</span>
+      </div>
+      <div class="hotel-info">
+        <h4>Grand Royale Paris</h4>
+        <div class="hotel-reviews"><i class="bi bi-chat-heart me-1"></i> 1,243 reviews</div>
+        <div class="hotel-price">$299 <small>/ night</small></div>
+      </div>
+    </div>
+    <div class="hotel-card" data-location="dubai" data-keywords="dubai uae ocean pearl burj desert">
+      <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2070&auto=format&fit=crop');">
+        <span class="hotel-rating"><i class="bi bi-star-fill"></i> 4.9</span>
+      </div>
+      <div class="hotel-info">
+        <h4>Ocean Pearl Dubai</h4>
+        <div class="hotel-reviews"><i class="bi bi-chat-heart me-1"></i> 3,871 reviews</div>
+        <div class="hotel-price">$459 <small>/ night</small></div>
+      </div>
+    </div>
+    <div class="hotel-card" data-location="italy" data-keywords="italy rome alpine chalet colosseum">
+      <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=2070&auto=format&fit=crop');">
+        <span class="hotel-rating"><i class="bi bi-star-fill"></i> 4.7</span>
+      </div>
+      <div class="hotel-info">
+        <h4>Alpine Chalet Italy</h4>
+        <div class="hotel-reviews"><i class="bi bi-chat-heart me-1"></i> 2,056 reviews</div>
+        <div class="hotel-price">$189 <small>/ night</small></div>
+      </div>
+    </div>
+    <div class="hotel-card" data-location="nyc" data-keywords="new york nyc urban oasis broadway">
+      <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop');">
+        <span class="hotel-rating"><i class="bi bi-star-fill"></i> 4.9</span>
+      </div>
+      <div class="hotel-info">
+        <h4>Urban Oasis NYC</h4>
+        <div class="hotel-reviews"><i class="bi bi-chat-heart me-1"></i> 4,502 reviews</div>
+        <div class="hotel-price">$329 <small>/ night</small></div>
+      </div>
+    </div>
+    <div class="hotel-card" data-location="tokyo" data-keywords="tokyo japan shibuya prince">
+      <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop');">
+        <span class="hotel-rating"><i class="bi bi-star-fill"></i> 4.8</span>
+      </div>
+      <div class="hotel-info">
+        <h4>Shibuya Prince Tokyo</h4>
+        <div class="hotel-reviews"><i class="bi bi-chat-heart me-1"></i> 2,980 reviews</div>
+        <div class="hotel-price">$279 <small>/ night</small></div>
+      </div>
+    </div>
+    <div class="hotel-card" data-location="maldives" data-keywords="maldives overwater bungalows beach resort">
+      <div class="hotel-img" style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=2070&auto=format&fit=crop');">
+        <span class="hotel-rating"><i class="bi bi-star-fill"></i> 4.9</span>
+      </div>
+      <div class="hotel-info">
+        <h4>Conrad Maldives</h4>
+        <div class="hotel-reviews"><i class="bi bi-chat-heart me-1"></i> 1,890 reviews</div>
+        <div class="hotel-price">$799 <small>/ night</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="no-match" id="noHotelsMatch" style="display: none;">No hotels match your search. Try another destination.</div>
+</section>
+
+<!-- FLIGHTS SECTION -->
+<section id="flights" class="container py-5">
+  <h2 class="section-heading">Curated flight experiences</h2>
+  <p class="section-sub">Smart routes, premium carriers</p>
+  <div class="flight-grid" id="flightGrid">
+    <div class="flight-card" data-location="paris" data-keywords="paris france air france cdg">
+      <div class="flight-img" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop');">
+        <span class="flight-price-tag"><i class="bi bi-tag"></i> $540</span>
+      </div>
+      <div class="flight-info">
+        <h4>Air France · Paris</h4>
+        <div class="flight-detail"><i class="bi bi-clock me-1"></i> 7h 20m · nonstop</div>
+        <div class="flight-price">$540 <small>round trip</small></div>
+      </div>
+    </div>
+    <div class="flight-card" data-location="tokyo" data-keywords="tokyo japan jal narita">
+      <div class="flight-img" style="background-image: url('https://images.unsplash.com/photo-1542296332-2e4473faf563?q=80&w=2074&auto=format&fit=crop');">
+        <span class="flight-price-tag"><i class="bi bi-tag"></i> $890</span>
+      </div>
+      <div class="flight-info">
+        <h4>JAL · Tokyo</h4>
+        <div class="flight-detail"><i class="bi bi-clock me-1"></i> 12h 45m · nonstop</div>
+        <div class="flight-price">$890 <small>round trip</small></div>
+      </div>
+    </div>
+    <div class="flight-card" data-location="dubai" data-keywords="dubai uae emirates dxb">
+      <div class="flight-img" style="background-image: url('https://images.unsplash.com/photo-1580674285054-bed31e145f59?q=80&w=2074&auto=format&fit=crop');">
+        <span class="flight-price-tag"><i class="bi bi-tag"></i> $720</span>
+      </div>
+      <div class="flight-info">
+        <h4>Emirates · Dubai</h4>
+        <div class="flight-detail"><i class="bi bi-clock me-1"></i> 9h 30m · nonstop</div>
+        <div class="flight-price">$720 <small>round trip</small></div>
+      </div>
+    </div>
+    <div class="flight-card" data-location="nyc" data-keywords="new york nyc delta jfk">
+      <div class="flight-img" style="background-image: url('https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?q=80&w=2074&auto=format&fit=crop');">
+        <span class="flight-price-tag"><i class="bi bi-tag"></i> $410</span>
+      </div>
+      <div class="flight-info">
+        <h4>Delta · New York</h4>
+        <div class="flight-detail"><i class="bi bi-clock me-1"></i> 6h 15m · nonstop</div>
+        <div class="flight-price">$410 <small>round trip</small></div>
+      </div>
+    </div>
+    <div class="flight-card" data-location="maldives" data-keywords="maldives mle sri lankan airlines">
+      <div class="flight-img" style="background-image: url('https://images.unsplash.com/photo-1542296332-2e4473faf563?q=80&w=2074&auto=format&fit=crop');">
+        <span class="flight-price-tag"><i class="bi bi-tag"></i> $1,290</span>
+      </div>
+      <div class="flight-info">
+        <h4>SriLankan · Maldives</h4>
+        <div class="flight-detail"><i class="bi bi-clock me-1"></i> 14h 20m · 1 stop</div>
+        <div class="flight-price">$1,290 <small>round trip</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="no-match" id="noFlightsMatch" style="display: none;">No flights match your search. Try another destination.</div>
+</section>
+
+<!-- PACKAGES SECTION -->
+<section id="budget" class="container py-5 scroll-target">
+  <div class="text-center">
+    <h2 class="section-heading">Tailored packages</h2>
+    <p class="section-sub">All-inclusive, no hidden fees</p>
+  </div>
+  <div class="row g-4 justify-content-center">
+    <div class="col-lg-4 col-md-6">
+      <div class="price-card-modern">
+        <div class="price-badge">essential</div>
+        <div class="price-value">$499<small>/pp</small></div>
+        <ul class="list-unstyled my-4">
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> 3 nights handpicked hotel</li>
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> city tour (shared)</li>
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> airport transfer</li>
+        </ul>
+        <button class="btn btn-outline-primary rounded-pill w-75">select</button>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="price-card-modern border border-4 border-primary shadow">
+        <div class="price-badge bg-primary">elevated</div>
+        <div class="price-value">$899<small>/pp</small></div>
+        <ul class="list-unstyled my-4">
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> 4 nights design hotel</li>
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> private city + food tour</li>
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> all transfers + cruise</li>
+        </ul>
+        <button class="btn btn-primary rounded-pill w-75">select</button>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="price-card-modern">
+        <div class="price-badge" style="background:#c4a59c;">prestige</div>
+        <div class="price-value">$1599<small>/pp</small></div>
+        <ul class="list-unstyled my-4">
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> 5 nights luxury palace</li>
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> private jet experience</li>
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> michelin star dinner</li>
+        </ul>
+        <button class="btn btn-outline-primary rounded-pill w-75">select</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE SECTION -->
+<section id="plan" class="container py-5">
+  <div class="text-center">
+    <h2 class="section-heading">your trip timeline</h2>
+    <p class="section-sub">smart day-by-day plan · fully editable</p>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="timeline-compact mt-2">
+        <div class="timeline-item-compact">
+          <span class="timeline-dot-compact"></span>
+          <div class="timeline-content-compact">
+            <h3><i class="bi bi-sunrise me-2" style="color:#9b87b5;"></i> Day 1 – arrival</h3>
+            <p>Check into designer hotel, evening Seine cruise.</p>
+          </div>
+        </div>
+        <div class="timeline-item-compact">
+          <span class="timeline-dot-compact"></span>
+          <div class="timeline-content-compact">
+            <h3><i class="bi bi-cup-straw me-2" style="color:#c4a59c;"></i> Day 2 – city + food</h3>
+            <p>Louvre morning, montmartre walking tour.</p>
+          </div>
+        </div>
+        <div class="timeline-item-compact">
+          <span class="timeline-dot-compact"></span>
+          <div class="timeline-content-compact">
+            <h3><i class="bi bi-water me-2" style="color:#7b69a0;"></i> Day 3 – beach & shopping</h3>
+            <p>Day trip to Deauville + evening shopping.</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <button class="btn btn-outline-primary rounded-pill px-5" data-bs-toggle="modal" data-bs-target="#planModal">
+          <i class="bi bi-pencil-square me-2"></i> customize plan
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-dark">
+  <div class="container text-center">
+    <div class="d-flex justify-content-center gap-4 fs-4 mb-3">
+      <i class="bi bi-instagram"></i>
+      <i class="bi bi-twitter-x"></i>
+      <i class="bi bi-pinterest"></i>
+      <i class="bi bi-linkedin"></i>
+    </div>
+    <p>© 2026 WanderWise · premium travel planning</p>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
